@@ -1,0 +1,14 @@
+#' McCabe Score Distribution by Age Group and Infection Type
+#'
+#' A tidy dataset summarizing the distribution of McCabe scores across different
+#' age groups and types of healthcare-associated infections (HAIs). Each row
+#' represents a unique combination of age group, infection type, with the total number of observed McCabe scores (counts) in that group.
+#'
+#' @format A tibble with columns:
+#' \describe{
+#'   \item{AgeGroup}{Age group of the patients (e.g., "20-24", "25-29")}
+#'   \item{Infection}{Type of healthcare-associated infection (e.g., "UTI", "SSI")}
+#'   \item{TotalCases}{The observed McCabe scores (counts) for each infection and age group}
+#' }
+#' @source BHAI dataset
+"mccabe_scores_distr_tidy"
