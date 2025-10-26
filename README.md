@@ -14,8 +14,10 @@ You can install the development version of HAIgermany from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes")
+remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
+#> Using GitHub PAT from the git credential store.
+#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (bb1ef176) has not changed since last install.
+#>   Use `force = TRUE` to force installation
 ```
 
 ## Example
