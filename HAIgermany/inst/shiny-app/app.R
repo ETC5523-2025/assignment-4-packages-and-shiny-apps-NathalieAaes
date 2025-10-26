@@ -1,13 +1,9 @@
 library(shiny)
-library(dplyr)
-library(tidyr)
 library(plotly)
-library(BHAI)
-library(purrr)
-library(tibble)
-library(RColorBrewer)
+library(HAIgermany)
 
-# styling
+
+# CSS styling
 custom_css <- "
 body {
   background-color: #F9FFFF;
@@ -37,8 +33,7 @@ h1, h2, h3, .title-panel {
 }
 "
 
-
-# mapping each hai to have its own color even when adding and removing other hai's
+# mapping each HAI to have its own color even when adding/removing
 hai_colors <- c(
   "UTI" = "#a6cee3",
   "CDI" = "#b2df8a",
@@ -47,15 +42,14 @@ hai_colors <- c(
   "SSI" = "#cab2d6"
 )
 
-
-
+# UI
 ui <- fluidPage(
-  tags$head(tags$style(HTML(custom_css))),  #applying the styling
+  tags$head(tags$style(HTML(custom_css))),  # applying styling
   titlePanel("🦠 HAI Data Explorer"),
 
   sidebarLayout(
     sidebarPanel(
-      #to be edited
+      # dataset selector
       selectInput(
         "dataset",
         "Choose dataset/plot:",
@@ -65,7 +59,7 @@ ui <- fluidPage(
       # checkboxes for selecting which HAI types to show
       uiOutput("hai_selector"),
 
-      #Explanatory text
+      # Explanatory text
       wellPanel(
         h4("Interpretation"),
         p("For each plot, the height of each bar indicates the number of patients.
@@ -85,21 +79,21 @@ ui <- fluidPage(
   )
 )
 
-
+# Server
 server <- function(input, output, session) {
 
-  #checkboxes
+  # HAI type checkboxes
   output$hai_selector <- renderUI({
     if (input$dataset == "Stratified Infection Rates") {
-      hai_choices <- sort(names(BHAI::num_hai_patients_by_stratum))
+      hai_choices <- sort(unique(num_hai_patients_tidy$Infection))
       checkboxGroupInput(
         "hai_types",
         "Select HAI types:",
         choices = hai_choices,
-        selected = intersect(hai_choices, c("UTI", "CDI"))  # selection of CDI and UTI as default. These have a big difference
+        selected = intersect(hai_choices, c("UTI", "CDI"))
       )
     } else if (input$dataset == "McCabe Score Distribution") {
-      hai_choices <- sort(names(BHAI::mccabe_scores_distr))
+      hai_choices <- sort(unique(mccabe_scores_distr_tidy$Infection))
       checkboxGroupInput(
         "hai_types_mccabe",
         "Select HAI types:",
@@ -113,23 +107,12 @@ server <- function(input, output, session) {
   output$main_plot <- renderPlotly({
     if (input$dataset == "Stratified Infection Rates") {
 
-      # to be edited
-      df <- purrr::imap_dfr(BHAI::num_hai_patients_by_stratum, function(mat, infection) {
-        as.data.frame(mat) %>%
-          tibble::rownames_to_column("AgeGroup") %>%
-          pivot_longer(-AgeGroup, names_to = "Gender", values_to = "Cases") %>%
-          group_by(AgeGroup) %>%
-          summarise(TotalCases = sum(Cases, na.rm = TRUE), .groups = "drop") %>%
-          mutate(Infection = infection)
-      }) %>%
-        filter(Infection %in% input$hai_types)  # filter by selected hai types in checkboxes
-
-      #ordering of the age-intervals to make sure [5,9] isn't between [45,49] and [50,54]
-      age_levels <- rownames(BHAI::num_hai_patients_by_stratum[[1]])
-      df$AgeGroup <- factor(df$AgeGroup, levels = age_levels, ordered = TRUE)
+      # filter dataset by selected HAI types
+      num_hai_patients <- num_hai_patients_tidy %>%
+        filter(Infection %in% input$hai_types)
 
       # the barplot itself
-      plot_ly(df,
+      plot_ly(num_hai_patients,
               x = ~AgeGroup, y = ~TotalCases,
               color = ~Infection, colors = hai_colors, type = "bar") %>%
         layout(barmode = "group",
@@ -137,28 +120,14 @@ server <- function(input, output, session) {
                xaxis = list(title = "Age Group"),
                yaxis = list(title = "Number of Cases"))
 
-      ####Plot 2: McCabe Score Distribution####
-
     } else if (input$dataset == "McCabe Score Distribution") {
 
-      # to be edited
-      df <- purrr::imap_dfr(BHAI::mccabe_scores_distr, function(mat, infection) {
-        as.data.frame(mat) %>%
-          tibble::rownames_to_column("AgeGroup") %>%
-          pivot_longer(-AgeGroup, names_to = "Gender", values_to = "Cases") %>%
-          group_by(AgeGroup) %>%
-          summarise(TotalCases = sum(Cases, na.rm = TRUE), .groups = "drop") %>%
-          mutate(Infection = infection)
-      }) %>%
+      # filter dataset by selected HAI types
+      mccabe_scores_distr <- mccabe_scores_distr_tidy %>%
         filter(Infection %in% input$hai_types_mccabe)
 
-      df <- df %>%
-        mutate(AgeLow = as.numeric(gsub("\\D*(\\d+).*", "\\1", AgeGroup))) %>%
-        arrange(AgeLow) %>%
-        mutate(AgeGroup = factor(AgeGroup, levels = unique(AgeGroup), ordered = TRUE))
-
-      # the plot itself
-      plot_ly(df,
+      # the barplot itself
+      plot_ly(mccabe_scores_distr,
               x = ~AgeGroup, y = ~TotalCases,
               color = ~Infection, colors = hai_colors, type = "bar") %>%
         layout(barmode = "group",
@@ -168,6 +137,5 @@ server <- function(input, output, session) {
     }
   })
 }
-
 
 shinyApp(ui, server)
