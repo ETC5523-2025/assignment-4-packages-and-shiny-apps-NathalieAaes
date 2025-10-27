@@ -13,45 +13,54 @@ knitr::opts_chunk$set(
 )
 ```
 
-# HAIgermany
+# HAIgermany 🦠
 
-<!-- badges: start -->
-<!-- badges: end -->
+[![Pkgdown](https://img.shields.io/badge/pkgdown-website-blue)](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
 
-The goal of HAIgermany is to ...
+HAIgermany is an R package for exploring and visualizing healthcare-associated infections (HAIs) in Germany.
+It provides tidy datasets, analysis functions, and an interactive Shiny app based on data from the ECDC Point Prevalence Survey (2011–2012).
+
+---
 
 ## Installation
 
-You can install the development version of HAIgermany from [GitHub](https://github.com/) with:
-
+You can install the development version of HAIgermany from GitHub:
 
 ```{r}
+# Install remotes if needed
+install.packages("remotes")
+
+# Install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
 ```
 
+---
 
+## Example Usage
 
-## Example
+### Load package and run the Shiny app:
 
-This is a basic example which shows you how to solve a common problem:
+```{r, eval=FALSE}
+library(HAIgermany)
 
-```{r example}
-#library(HAIgermany)
-## basic example code
+# Launch the interactive HAI Explorer app
+run_HAIgermany_app()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### Explore datasets:
 
-```{r cars}
-summary(cars)
+```{r, eval=FALSE}
+# Distribution of McCabe scores
+head(mccabe_scores_distr)
+
+# Number of HAI patients by infection type and unit
+head(num_hai_patients_tidy)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+---
 
-You can also embed plots, for example:
+## Documentation
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+Full function and dataset documentation is available on the pkgdown site: [HAIgermany pkgdown site](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+

@@ -1,54 +1,60 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# HAIgermany
+# HAIgermany 🦠
 
-<!-- badges: start -->
-<!-- badges: end -->
+[![Pkgdown](https://img.shields.io/badge/pkgdown-website-blue)](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
 
-The goal of HAIgermany is to …
+HAIgermany is an R package for exploring and visualizing
+healthcare-associated infections (HAIs) in Germany. It provides tidy
+datasets, analysis functions, and an interactive Shiny app based on data
+from the ECDC Point Prevalence Survey (2011–2012).
+
+------------------------------------------------------------------------
 
 ## Installation
 
-You can install the development version of HAIgermany from
-[GitHub](https://github.com/) with:
+You can install the development version of HAIgermany from GitHub:
 
 ``` r
+# Install remotes if needed
+install.packages("remotes")
+#> Error in install.packages : Updating loaded packages
+
+# Install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
 #> Using GitHub PAT from the git credential store.
-#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (bb1ef176) has not changed since last install.
+#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (a0eca432) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 ```
 
-## Example
+------------------------------------------------------------------------
 
-This is a basic example which shows you how to solve a common problem:
+## Example Usage
 
-``` r
-#library(HAIgermany)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+### Load package and run the Shiny app:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+library(HAIgermany)
+
+# Launch the interactive HAI Explorer app
+run_HAIgermany_app()
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+### Explore datasets:
 
-You can also embed plots, for example:
+``` r
+# Distribution of McCabe scores
+head(mccabe_scores_distr)
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+# Number of HAI patients by infection type and unit
+head(num_hai_patients_tidy)
+```
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+------------------------------------------------------------------------
+
+## Documentation
+
+Full function and dataset documentation is available on the pkgdown
+site: [HAIgermany pkgdown
+site](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
