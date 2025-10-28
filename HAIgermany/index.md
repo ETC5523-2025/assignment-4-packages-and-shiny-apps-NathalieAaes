@@ -35,7 +35,7 @@ To install the package directly from GitHub:
 install.packages("remotes")
 
 # Then install HAIgermany
-remotes::install_github("NathalieAaes/HAIgermany")
+remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
 ```
 
 

@@ -28,7 +28,7 @@ You can install the development version of HAIgermany from GitHub:
 
 ```{r}
 # Install remotes if needed
-install.packages("remotes")
+# install.packages("remotes")
 
 # Install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
@@ -51,7 +51,7 @@ run_HAIgermany_app()
 
 ```{r, eval=FALSE}
 # Distribution of McCabe scores
-head(mccabe_scores_distr)
+head(mccabe_scores_distr_tidy)
 
 # Number of HAI patients by infection type and unit
 head(num_hai_patients_tidy)

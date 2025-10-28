@@ -18,13 +18,12 @@ You can install the development version of HAIgermany from GitHub:
 
 ``` r
 # Install remotes if needed
-install.packages("remotes")
-#> Error in install.packages : Updating loaded packages
+# install.packages("remotes")
 
 # Install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
 #> Using GitHub PAT from the git credential store.
-#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (a0eca432) has not changed since last install.
+#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (5765f04f) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 ```
 
@@ -45,7 +44,7 @@ run_HAIgermany_app()
 
 ``` r
 # Distribution of McCabe scores
-head(mccabe_scores_distr)
+head(mccabe_scores_distr_tidy)
 
 # Number of HAI patients by infection type and unit
 head(num_hai_patients_tidy)
