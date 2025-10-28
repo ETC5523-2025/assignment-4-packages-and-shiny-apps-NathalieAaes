@@ -1,9 +1,9 @@
 Package: HAIgermany
-Title: Shiny App for the BHAI dataset
+Title: Shiny App for Exploring Healthcare-Associated Infection Data in Germany
 Version: 0.0.0.9000
 Authors@R: 
     person("Nathalie", "Aaes-Jørgensen", , "nathalie.aaesj@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph) [**].
+Description: Provides an interactive Shiny application for exploring the BHAI dataset of healthcare-associated infections in Germany (available in the R-package BHAI). Users can visualize infection counts and patients at risk across age groups, select specific infection types, and interpret the data through built-in explanatory text. This package includes preprocessed datasets and functions to support the app without external data files.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -11,3 +11,7 @@ RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
