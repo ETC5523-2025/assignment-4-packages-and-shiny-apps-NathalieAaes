@@ -5,16 +5,19 @@
 
 [![Pkgdown](https://img.shields.io/badge/pkgdown-website-blue)](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
 
-HAIgermany is an R package for exploring and visualizing
-healthcare-associated infections (HAIs) in Germany. It provides tidy
-datasets, analysis functions, and an interactive Shiny app based on data
-from the ECDC Point Prevalence Survey (2011–2012).
+HAIgermany is an R package designed to explore and visualize
+healthcare-associated infections (HAIs) in Germany. It includes tidy
+datasets and analysis functions, along with an interactive Shiny app
+that allows users to filter by infection type and view stratified
+infection rates and McCabe score distributions. The data originates from
+the BHAI R package, which is based on the ECDC Point Prevalence Survey
+(2011–2012).
 
 ------------------------------------------------------------------------
 
 ## Installation
 
-You can install the development version of HAIgermany from GitHub:
+You can install HAIgermany from GitHub:
 
 ``` r
 # Install remotes if needed
@@ -22,9 +25,6 @@ You can install the development version of HAIgermany from GitHub:
 
 # Install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
-#> Using GitHub PAT from the git credential store.
-#> Skipping install of 'HAIgermany' from a github remote, the SHA1 (5765f04f) has not changed since last install.
-#>   Use `force = TRUE` to force installation
 ```
 
 ------------------------------------------------------------------------
@@ -42,12 +42,19 @@ run_HAIgermany_app()
 
 ### Explore datasets:
 
-``` r
-# Distribution of McCabe scores
-head(mccabe_scores_distr_tidy)
+- `num_hai_patients_tidy`: Number of patients who actually had a
+  healthcare-associated infection (HAI), broken down by age group and
+  infection type. These are the observed HAI cases in the PPS survey.
+- `mccabe_scores_distr_tidy`: The counts include all patients in the PPS
+  survey who were at risk of that specific infection, not just those who
+  became infected.
 
+``` r
 # Number of HAI patients by infection type and unit
 head(num_hai_patients_tidy)
+
+# Distribution of McCabe scores
+head(mccabe_scores_distr_tidy)
 ```
 
 ------------------------------------------------------------------------
@@ -55,5 +62,5 @@ head(num_hai_patients_tidy)
 ## Documentation
 
 Full function and dataset documentation is available on the pkgdown
-site: [HAIgermany pkgdown
-site](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/)
+site:
+[HAIgermany](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/).
