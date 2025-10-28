@@ -1,0 +1,129 @@
+---
+title: "HAIgermany"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{HAIgermany}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+
+Healthcare-associated infections (HAIs) are infections that patients acquire while receiving medical treatment in a hospital or other healthcare facility.
+The HAIgermany package provides datasets and tools to explore and visualize HAIs observed in the ECDC Point Prevalence Survey (2011–2012).
+This vignette demonstrates how to:
+
+- Load and inspect the included datasets
+- Understand what each variable represents
+- Launch the Shiny app for interactive exploration
+
+
+# Installation
+
+```{r, eval = FALSE}
+#If not yet installed:
+install.packages("remotes")
+
+remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
+```
+
+
+Then load the package:
+
+```{r}
+library(HAIgermany)
+```
+
+# Exploring the Datasets
+
+The package includes two key datasets derived from the ECDC PPS data:
+
+- `num_hai_patients_tidy` Counts of patients who actually had a healthcare-associated infection (HAI), broken down by age group and infection type.
+- `mccabe_scores_distr_tidy` Counts of all patients at risk for each infection type, by age group.
+
+For example:
+
+- Surgical site infections (SSI) are only relevant for patients who underwent surgery
+- Urinary tract infections (UTI) are only relevant for patients with a urinary catheter
+
+Let’s explore them:
+
+```{r}
+head(num_hai_patients_tidy)
+head(mccabe_scores_distr_tidy)
+```
+
+## Understanding the Variables
+`num_hai_patients_tidy`
+
+- `AgeGroup` Age range of the patients
+- `Infection` Type of HAI (e.g. SSI, UTI, BSI, etc.)
+- `TotalCases` Number of patients with that HAI in the age group
+
+`mccabe_scores_distr_tidy`
+
+- `AgeGroup` Age range of the patients
+- `Infection`	Type of HAI the patients were at risk of developing
+- `PatientsAtRisk` Total number of patients at risk for that HAI in the age group
+
+
+## Comparing the Two Datasets
+
+```{r}
+summary(num_hai_patients_tidy$TotalCases)
+summary(mccabe_scores_distr_tidy$PatientsAtRisk)
+```
+
+You’ll notice that `mccabe_scores_distr_tidy` generally has much higher counts - this is because it includes all patients at risk, not just those who became infected.
+
+
+## Visualizing Age Distributions
+
+You can use `ggplot2` to explore the age trends:
+
+
+```{r, fig.width=8, fig.height=5}
+library(ggplot2)
+
+ggplot(num_hai_patients_tidy, aes(x = AgeGroup, y = TotalCases, fill = Infection)) +
+geom_col(position = "dodge") +
+labs(
+title = "Number of HAI Patients by Age Group",
+x = "Age Group",
+y = "Number of Patients"
+) +
+  theme_minimal() +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+# Shiny App
+
+The HAIgermany Shiny app allows for interactive exploration of infection patterns.
+
+```{r, eval=FALSE}
+run_HAIgermany_app()
+```
+
+Within the app, you can:
+
+- Filter HAIs by type
+- Compare infection rates across age groups
+- Explore the distributions interactively
+
+
+# Summary
+The HAIgermany package provides:
+
+- Clean, tidy data for HAIs in Germany
+- An interactive app for exploring infection patterns
+

@@ -11,8 +11,9 @@ application based on data from the **ECDC Point Prevalence Survey (2011–2012)*
 ## What’s inside
 
 ### Datasets
-- `mccabe_scores_distr`: Distribution of McCabe scores by infection, age, and gender.  
-- `num_hai_patients_tidy`: Number of HAI patients by infection type and unit.  
+- `num_hai_patients_tidy`: Number of patients who actually had a healthcare-associated infection (HAI), broken down by age group and infection type.
+- `mccabe_scores_distr_tidy`: The counts include all patients in the PPS survey who were at risk of that specific infection, not just those who became infected. For example, patients at risk of surgical site infections (SSI) are only those who underwent surgery, while patients at risk of urinary tract infections (UTI) are those with a urinary catheter.
+
 
 Each dataset is tidy and ready for analysis or visualization.
 
@@ -46,11 +47,3 @@ Explore the documentation and examples through the navigation bar above:
 
 - **Reference**: function and dataset documentation
 - **Vignettes**: [**]
-
-
-
-
-
-
-
-
