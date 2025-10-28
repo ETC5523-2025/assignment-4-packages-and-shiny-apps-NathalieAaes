@@ -16,16 +16,6 @@ application based on data from the **ECDC Point Prevalence Survey (2011–2012)*
 
 Each dataset is tidy and ready for analysis or visualization.
 
-### Shiny App
-Launch the interactive HAI Explorer app:
-
-```r
-library(HAIgermany)
-run_HAIgermany_app()
-```
-
-Use the app to filter infections, explore age distributions, and visualize McCabe score patterns interactively.
-
 ### Installation
 
 To install the package directly from GitHub:
@@ -37,6 +27,17 @@ install.packages("remotes")
 # Then install HAIgermany
 remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany")
 ```
+
+
+### Shiny App
+Launch the interactive HAI Explorer app:
+
+```r
+library(HAIgermany)
+run_HAIgermany_app()
+```
+
+Use the app to filter infections, explore age distributions, and visualize McCabe score patterns interactively.
 
 
 ### Learn More
