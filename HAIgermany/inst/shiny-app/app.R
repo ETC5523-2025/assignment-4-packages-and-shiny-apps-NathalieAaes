@@ -42,34 +42,54 @@ hai_colors <- c(
   "SSI" = "#cab2d6"
 )
 
+# HAI type explanations
+hai_descriptions <- c(
+  "UTI" = "(Urinary Tract Infection): infection of the urinary system, often associated with catheter use",
+  "CDI" = "(Clostridium difficile Infection): bacterial infection causing diarrhea, usually after antibiotic use",
+  "HAP" = "(Hospital-Acquired Pneumonia): lung infection occurring during hospital stay",
+  "BSI" = "(Bloodstream Infection): bacteria or fungi in the blood, often linked to central lines",
+  "SSI" = "(Surgical Site Infection): infection at the site of a surgical incision"
+)
+
 # UI
 ui <- fluidPage(
-  tags$head(tags$style(HTML(custom_css))),  # applying styling
-  titlePanel("🦠 HAI Data Explorer"),
+  tags$head(tags$style(HTML(custom_css))),
+  titlePanel("HAI Data Explorer"),
 
   sidebarLayout(
     sidebarPanel(
-      # dataset selector
+      # Dataset selector
       selectInput(
         "dataset",
         "Choose dataset/plot:",
-        choices = c("Stratified Infection Rates", "McCabe Score Distribution")
+        choices = c("Stratified Infection Rates", "Patients at Risk")
       ),
 
-      # checkboxes for selecting which HAI types to show
+      # HAI type checkboxes
       uiOutput("hai_selector"),
 
       # Explanatory text
       wellPanel(
         h4("Interpretation"),
-        p("For each plot, the height of each bar indicates the number of patients.
-          For 'Stratified Infection Rates', bars represent counts per age group.
-          For 'McCabe Score Distribution', bars show counts per age group for different HAIs."),
+        p("For each plot, the height of each bar indicates the number of patients."),
+        p("• 'Stratified Infection Rates' shows the actual infection counts by age group.
+          This helps identify which age groups are most affected by each HAI."),
+        p("• 'Patients at Risk' shows the total number of patients who could potentially develop each HAI.
+          Comparing this with actual infection counts can highlight which infections are more or less common relative to the population at risk. See the vignette for more explanation."),
+        p("• You can select specific HAI types using the checkboxes to focus on patterns of interest.
+          Look for differences between age groups and across infection types to understand the distribution of risk in German healthcare settings."),
 
         h4("Variable description"),
-        p(strong("AgeGroup:"), "Ranges of patient ages."),
+        p(strong("Age Group:"), "Ranges of patient ages."),
         p(strong("Infection:"), "Type of healthcare-associated infection (HAI), e.g., UTI, CDI."),
-        p(strong("Cases / TotalCases:"), "Number of patients with that HAI in the specified age group.")
+        uiOutput("count_description"),
+
+        h4("HAI Type Explanations"),
+        tags$ul(
+          lapply(names(hai_descriptions), function(x) {
+            tags$li(paste0(x, ": ", hai_descriptions[x]))
+          })
+        )
       )
     ),
 
@@ -82,7 +102,7 @@ ui <- fluidPage(
 # Server
 server <- function(input, output, session) {
 
-  # HAI type checkboxes
+  # HAI type selector UI
   output$hai_selector <- renderUI({
     if (input$dataset == "Stratified Infection Rates") {
       hai_choices <- sort(unique(num_hai_patients_tidy$Infection))
@@ -92,7 +112,7 @@ server <- function(input, output, session) {
         choices = hai_choices,
         selected = intersect(hai_choices, c("UTI", "CDI"))
       )
-    } else if (input$dataset == "McCabe Score Distribution") {
+    } else if (input$dataset == "Patients at Risk") {
       hai_choices <- sort(unique(mccabe_scores_distr_tidy$Infection))
       checkboxGroupInput(
         "hai_types_mccabe",
@@ -103,39 +123,54 @@ server <- function(input, output, session) {
     }
   })
 
-  ####Plot 1: Stratified Infection Rates####
+  # Dynamic description for counts variable
+  output$count_description <- renderUI({
+    if (input$dataset == "Stratified Infection Rates") {
+      p(strong("Number of Cases:"), "Number of patients who actually had that HAI in the specified age group.")
+    } else if (input$dataset == "Patients at Risk") {
+      p(strong("Patients at Risk:"), "Number of patients at risk of that HAI in the specified age group.")
+    }
+  })
+
+  # Main plot
   output$main_plot <- renderPlotly({
+
     if (input$dataset == "Stratified Infection Rates") {
 
-      # filter dataset by selected HAI types
-      num_hai_patients <- num_hai_patients_tidy %>%
+      data_plot <- num_hai_patients_tidy %>%
         filter(Infection %in% input$hai_types)
 
-      # the barplot itself
-      plot_ly(num_hai_patients,
-              x = ~AgeGroup, y = ~TotalCases,
-              color = ~Infection, colors = hai_colors, type = "bar") %>%
-        layout(barmode = "group",
-               title = "Stratified Infection Rates by Age Group",
-               xaxis = list(title = "Age Group"),
-               yaxis = list(title = "Number of Cases"))
+      plot_ly(
+        data_plot,
+        x = ~AgeGroup, y = ~TotalCases,
+        color = ~Infection, colors = hai_colors, type = "bar"
+      ) %>%
+        layout(
+          barmode = "group",
+          title = "Stratified Infection Rates by Age Group",
+          xaxis = list(title = "Age Group"),
+          yaxis = list(title = "Number of Cases")
+        )
 
-    } else if (input$dataset == "McCabe Score Distribution") {
+    } else if (input$dataset == "Patients at Risk") {
 
-      # filter dataset by selected HAI types
-      mccabe_scores_distr <- mccabe_scores_distr_tidy %>%
+      data_plot <- mccabe_scores_distr_tidy %>%
         filter(Infection %in% input$hai_types_mccabe)
 
-      # the barplot itself
-      plot_ly(mccabe_scores_distr,
-              x = ~AgeGroup, y = ~TotalCases,
-              color = ~Infection, colors = hai_colors, type = "bar") %>%
-        layout(barmode = "group",
-               title = "McCabe Score Distribution by Age Group",
-               xaxis = list(title = "Age Group"),
-               yaxis = list(title = "Number of Cases"))
+      plot_ly(
+        data_plot,
+        x = ~AgeGroup, y = ~PatientsAtRisk,
+        color = ~Infection, colors = hai_colors, type = "bar"
+      ) %>%
+        layout(
+          barmode = "group",
+          title = "Patients at Risk by Age Group",
+          xaxis = list(title = "Age Group"),
+          yaxis = list(title = "Patients at Risk")
+        )
     }
   })
 }
+
 
 shinyApp(ui, server)
