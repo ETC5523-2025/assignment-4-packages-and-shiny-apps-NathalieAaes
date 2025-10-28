@@ -21,16 +21,12 @@ num_hai_patients_tidy$AgeGroup <- factor(num_hai_patients_tidy$AgeGroup, levels 
 
 
 
-#### 2. McCabe Score Distribution dataset ####
-# mccabe_scores_distr is a list of lists of matrices
-# We want: AgeGroup | Infection | TotalCases
-
 mccabe_scores_distr_tidy <- purrr::imap_dfr(BHAI::mccabe_scores_distr, function(mat, infection) {
   as.data.frame(mat) %>%
     tibble::rownames_to_column("AgeGroup") %>%
     pivot_longer(-AgeGroup, names_to = "Gender", values_to = "Cases") %>%
     group_by(AgeGroup) %>%
-    summarise(TotalCases = sum(Cases, na.rm = TRUE), .groups = "drop") %>%
+    summarise(PatientsAtRisk = sum(Cases, na.rm = TRUE), .groups = "drop") %>%
     mutate(Infection = infection)})
 
 mccabe_scores_distr_tidy <- mccabe_scores_distr_tidy %>%
