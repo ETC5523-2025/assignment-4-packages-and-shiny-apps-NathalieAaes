@@ -1,0 +1,32 @@
+url: https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes
+
+template:
+  bootstrap: 5
+  bootswatch: yeti
+
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles
+      - news
+  components:
+    reference:
+      text: "Documentations"
+      href: reference/index.html
+    articles:
+      text: "Vignettes"
+      href: articles/index.html
+
+articles:
+  - title: "Vignettes"
+    contents:
+      - HAIgermany
+
+reference:
+  - title: "Documentations"
+    contents:
+      - run_HAIgermany_app
+      - mccabe_scores_distr_tidy
+      - num_hai_patients_tidy

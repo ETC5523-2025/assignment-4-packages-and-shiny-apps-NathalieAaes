@@ -1,2 +1,4 @@
 load("/Users/nathalie/Desktop/Communicating with Data/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany/data/num_hai_patients_by_stratum.rda")
 load("/Users/nathalie/Desktop/Communicating with Data/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany/data/num_hai_patients_tidy.rda")
+load("/Users/nathalie/Desktop/Communicating with Data/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany/data/mccabe_scores_distr_tidy.rda")
+load("/Users/nathalie/Desktop/Communicating with Data/assignment-4-packages-and-shiny-apps-NathalieAaes/HAIgermany/data/num_hai_patients_tidy.rda")

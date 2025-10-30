@@ -1,13 +1,13 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE-text.html</loc></url>
-<url><loc>/articles/HAIgermany.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/mccabe_scores_distr_tidy.html</loc></url>
-<url><loc>/reference/num_hai_patients_tidy.html</loc></url>
-<url><loc>/reference/run_HAIgermany_app.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/404.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/LICENSE-text.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/articles/HAIgermany.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/articles/index.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/authors.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/index.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/reference/index.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/reference/mccabe_scores_distr_tidy.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/reference/num_hai_patients_tidy.html</loc></url>
+<url><loc>https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-NathalieAaes/reference/run_HAIgermany_app.html</loc></url>
 </urlset>
 
